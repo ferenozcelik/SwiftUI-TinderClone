@@ -14,14 +14,19 @@ struct CardView: View {
     
     var body: some View {
         ZStack(alignment: .bottom) {
-            Image(.shakira1)
-                .resizable()
-                .scaledToFill()
+            ZStack(alignment: .top) {
+                Image(.shakira1)
+                    .resizable()
+                    .scaledToFill()
+                
+                SwipeActionIndicatorView(xOffset: $xOffset)
+                    .frame(width: SizeConstants.cardWidth)
+            }
             
             UserInfoView()
-                .frame(width: cardWidth)
+                .frame(width: SizeConstants.cardWidth)
         }
-        .frame(width: cardWidth, height: cardHeight)
+        .frame(width: SizeConstants.cardWidth, height: SizeConstants.cardHeight)
         .clipShape(RoundedRectangle(cornerRadius: 10))
         .offset(x: xOffset)
         .rotationEffect(.degrees(degrees))
@@ -40,18 +45,6 @@ struct CardView: View {
 
 private extension CardView {
     
-    var cardWidth: CGFloat {
-        UIScreen.main.bounds.width - 20
-    }
-    
-    var cardHeight: CGFloat {
-        UIScreen.main.bounds.height / 1.45
-    }
-    
-    var screenCutoff: CGFloat {
-        (UIScreen.main.bounds.width / 2) * 0.8
-    }
-    
     func onDragChanged(_ value: _ChangedGesture<DragGesture>.Value) {
         xOffset = value.translation.width
         degrees = Double(value.translation.width / 25)
@@ -60,7 +53,7 @@ private extension CardView {
     func onDragEnded(_ value: _ChangedGesture<DragGesture>.Value) {
         let width = value.translation.width
         
-        if abs(width) <= abs(screenCutoff) {
+        if abs(width) <= abs(SizeConstants.screenCutoff) {
             xOffset = 0
             degrees = 0
         }

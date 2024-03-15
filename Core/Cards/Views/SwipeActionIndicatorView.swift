@@ -44,5 +44,5 @@ struct SwipeActionIndicatorView: View {
 }
 
 #Preview {
-    SwipeActionIndicatorView(xOffset: .constant(20))
+    SwipeActionIndicatorView(xOffset: .constant(100))
 }

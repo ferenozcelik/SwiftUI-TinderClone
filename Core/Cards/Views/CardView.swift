@@ -13,30 +13,26 @@ struct CardView: View {
     @State private var degrees: Double = 0
     @State private var currentImageIndex = 0
     
-    @State private var mockImages = [
-        "shakira1",
-        "shakira2",
-        "shakira3"
-    ]
+    let card: Card
     
     var body: some View {
         ZStack(alignment: .bottom) {
             ZStack(alignment: .top) {
-                Image(mockImages[currentImageIndex])
+                Image(user.profileImageURLs[currentImageIndex])
                     .resizable()
                     .scaledToFill()
+                    .frame(width: SizeConstants.cardWidth, height: SizeConstants.cardHeight)
                     .overlay {
-                        ImageScrollingOverlayView(currentImageIndex: $currentImageIndex, imageCount: mockImages.count)
+                        ImageScrollingOverlayView(currentImageIndex: $currentImageIndex, imageCount: imageCount)
                     }
                 
-                CardImageIndicatorView(currentImageIndex: currentImageIndex, imageCount: mockImages.count)
+                CardImageIndicatorView(currentImageIndex: currentImageIndex, imageCount: imageCount)
                 
                 SwipeActionIndicatorView(xOffset: $xOffset)
                     .frame(width: SizeConstants.cardWidth)
             }
             
-            UserInfoView()
-                .frame(width: SizeConstants.cardWidth)
+            UserInfoView(user: user)
         }
         .frame(width: SizeConstants.cardWidth, height: SizeConstants.cardHeight)
         .clipShape(RoundedRectangle(cornerRadius: 10))
@@ -52,7 +48,7 @@ struct CardView: View {
 }
 
 #Preview {
-    CardView()
+    CardView(card: Card(user: MockData.users.first!))
 }
 
 private extension CardView {
@@ -92,5 +88,11 @@ private extension CardView {
         degrees = -12
     }
     
+    var user: User {
+        return card.user
+    }
     
+    var imageCount: Int {
+        return user.profileImageURLs.count
+    }
 }

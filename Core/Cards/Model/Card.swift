@@ -7,12 +7,17 @@
 
 import Foundation
 
-struct Card {
+struct Card: Identifiable, Hashable {
+    
     let user: User
-}
-
-extension Card: Identifiable, Hashable {
+    
     var id: String {
         return user.id
     }
 }
+
+//extension Card: Identifiable, Hashable {
+//    var id: String {
+//        return user.id
+//    }
+//}

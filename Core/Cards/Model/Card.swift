@@ -11,7 +11,7 @@ struct Card {
     let user: User
 }
 
-extension Card: Identifiable {
+extension Card: Identifiable, Hashable {
     var id: String {
         return user.id
     }

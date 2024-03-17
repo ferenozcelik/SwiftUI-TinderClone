@@ -9,6 +9,7 @@ import SwiftUI
 
 struct CardView: View {
     
+    @ObservedObject var vm: CardsViewModel
     @State private var xOffset: CGFloat = 0
     @State private var degrees: Double = 0
     @State private var currentImageIndex = 0
@@ -48,7 +49,8 @@ struct CardView: View {
 }
 
 #Preview {
-    CardView(card: Card(user: MockData.users.first!))
+    CardView(vm: CardsViewModel(service: CardService()), 
+             card: Card(user: MockData.users.first!))
 }
 
 private extension CardView {
@@ -81,11 +83,13 @@ private extension CardView {
     func swipeRight() {
         xOffset = 500
         degrees = 12
+        vm.removeCard(card)
     }
     
     func swipeLeft() {
         xOffset = -500
         degrees = -12
+        vm.removeCard(card)
     }
     
     var user: User {

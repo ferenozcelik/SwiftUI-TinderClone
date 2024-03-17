@@ -7,6 +7,7 @@
 
 import Foundation
 
+@MainActor
 class CardsViewModel: ObservableObject {
     
     @Published var cards = [Card]()
@@ -26,5 +27,10 @@ class CardsViewModel: ObservableObject {
         } catch {
             print("failed to fetch cards: \(error)")
         }
+    }
+    
+    func removeCard(_ card: Card) {
+        guard let index = cards.firstIndex(where: { $0.id == card.id }) else { return }
+        cards.remove(at: index)
     }
 }

@@ -49,7 +49,7 @@ struct CardView: View {
 }
 
 #Preview {
-    CardView(vm: CardsViewModel(service: CardService()), 
+    CardView(vm: CardsViewModel(service: CardService()),
              card: Card(user: MockData.users.first!))
 }
 
@@ -81,15 +81,21 @@ private extension CardView {
     }
     
     func swipeRight() {
-        xOffset = 500
-        degrees = 12
-        vm.removeCard(card)
+        withAnimation {
+            xOffset = 500
+            degrees = 12
+        } completion: {
+            vm.removeCard(card)
+        }
     }
     
     func swipeLeft() {
-        xOffset = -500
-        degrees = -12
-        vm.removeCard(card)
+        withAnimation {
+            xOffset = -500
+            degrees = -12
+        } completion: {
+            vm.removeCard(card)
+        }
     }
     
     var user: User {

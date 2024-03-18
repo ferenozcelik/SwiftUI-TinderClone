@@ -17,10 +17,6 @@ struct CardStackView: View {
                 CardView(vm: vm, card: card)
             }
         }
-        .onChange(of: vm.cards) { oldValue, newValue in
-            print("old value count: \(oldValue.count)")
-            print("new value count: \(newValue.count)")
-        }
     }
 }
 

@@ -35,6 +35,9 @@ struct CardView: View {
             
             UserInfoView(user: user)
         }
+        .onReceive(vm.$buttonSwipeAction, perform: { action in
+            onReceiveSwipeAction(action)
+        })
         .frame(width: SizeConstants.cardWidth, height: SizeConstants.cardHeight)
         .clipShape(RoundedRectangle(cornerRadius: 10))
         .offset(x: xOffset)
@@ -50,7 +53,7 @@ struct CardView: View {
 
 #Preview {
     CardView(vm: CardsViewModel(service: CardService()),
-             card: Card(user: MockData.users.first!))
+             card: Card(user: MockData.users.last!))
 }
 
 private extension CardView {
@@ -95,6 +98,19 @@ private extension CardView {
             degrees = -12
         } completion: {
             vm.removeCard(card)
+        }
+    }
+    
+    func onReceiveSwipeAction(_ action: SwipeAction?) {
+        guard let action else { return }
+        let topCard = vm.cards.last
+        if topCard == card {
+            switch action {
+            case .reject:
+                swipeLeft()
+            case .like:
+                swipeRight()
+            }
         }
     }
     

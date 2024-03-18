@@ -12,9 +12,14 @@ struct CardStackView: View {
     @StateObject var vm = CardsViewModel(service: CardService())
     
     var body: some View {
-        ZStack {
-            ForEach(vm.cards) { card in
-                CardView(vm: vm, card: card)
+        VStack(spacing: 16) {
+            ZStack {
+                ForEach(vm.cards) { card in
+                    CardView(vm: vm, card: card)
+                }
+            }
+            if !vm.cards.isEmpty {
+                SwipeActionButtonsView(vm: vm)
             }
         }
     }

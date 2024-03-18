@@ -13,6 +13,7 @@ struct CardView: View {
     @State private var xOffset: CGFloat = 0
     @State private var degrees: Double = 0
     @State private var currentImageIndex = 0
+    @State private var showProfileSheet: Bool = false
     
     let card: Card
     
@@ -33,7 +34,7 @@ struct CardView: View {
                     .frame(width: SizeConstants.cardWidth)
             }
             
-            UserInfoView(user: user)
+            UserInfoView(showProfileSheet: $showProfileSheet, user: user)
         }
         .onReceive(vm.$buttonSwipeAction, perform: { action in
             onReceiveSwipeAction(action)
@@ -48,6 +49,9 @@ struct CardView: View {
                 .onChanged(onDragChanged(_:))
                 .onEnded(onDragEnded(_:))
         )
+        .fullScreenCover(isPresented: $showProfileSheet) {
+            UserProfileView(user: user)
+        }
     }
 }
 

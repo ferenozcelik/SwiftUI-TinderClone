@@ -13,7 +13,7 @@ struct MockData {
         .init(
             id: UUID().uuidString,
             fullname: "Shakira",
-            age: 37,
+            age: 47,
             profileImageURLs: [
                 "shakira1",
                 "shakira2",

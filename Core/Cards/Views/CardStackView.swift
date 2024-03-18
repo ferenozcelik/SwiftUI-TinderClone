@@ -12,14 +12,24 @@ struct CardStackView: View {
     @StateObject var vm = CardsViewModel(service: CardService())
     
     var body: some View {
-        VStack(spacing: 16) {
-            ZStack {
-                ForEach(vm.cards) { card in
-                    CardView(vm: vm, card: card)
+        NavigationStack {
+            VStack(spacing: 16) {
+                ZStack {
+                    ForEach(vm.cards) { card in
+                        CardView(vm: vm, card: card)
+                    }
+                }
+                if !vm.cards.isEmpty {
+                    SwipeActionButtonsView(vm: vm)
                 }
             }
-            if !vm.cards.isEmpty {
-                SwipeActionButtonsView(vm: vm)
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Image(.tinderlogo)
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 88)
+                }
             }
         }
     }
